@@ -3,7 +3,7 @@ title: Homepage
 description: AWS Lambda Powertools Python
 ---
 
-!!! danger "This is MASTER branch"
+!!! danger "This is DEVELOP branch"
 
 A suite of utilities for AWS Lambda functions to ease adopting best practices such as tracing, structured logging, custom metrics, and more.
 
