@@ -22,7 +22,7 @@ jobs:
     - name: Run all tests, linting and baselines
       run: make pr
     - name: Build docs website and API reference
-      run: make build-docs VERSION=${RELEASE_TAG_VERSION}
+      run: make build-docs VERSION=${RELEASE_TAG_VERSION} ALIAS="latest"
     - name: Deploy all docs
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -30,4 +30,3 @@ jobs:
         publish_dir: ./site
         # keep_files: true
         destination_dir: ${RELEASE_TAG_VERSION}
-# TODO: Use mike to update latest alias once deployed

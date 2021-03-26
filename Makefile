@@ -2,6 +2,7 @@
 .PHONY: docs-local docs-api-local security-baseline complexity-baseline release-prod release-test release
 
 VERSION ?= "develop"
+ALIAS ?= ""
 
 target:
 	@$(MAKE) pr
@@ -34,7 +35,7 @@ build-docs:
 	@echo "Rebuilding docs"
 	rm -rf site api
 	@echo "Building website docs"
-	poetry run mike deploy ${VERSION}
+	poetry run mike deploy --update-aliases ${VERSION} ${ALIAS}
 	@echo "Building API docs"
 	poetry run pdoc --html --output-dir api/ ./aws_lambda_powertools --force
 	@echo "Merging docs"
