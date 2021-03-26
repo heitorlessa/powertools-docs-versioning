@@ -21,14 +21,13 @@ jobs:
       run: make dev
     - name: Run all tests, linting and baselines
       run: make pr
-    - name: Build docs website
-      run: poetry run mike deploy ${RELEASE_TAG_VERSION} --push
-    - name: Build docs API reference
-      run: make build-docs-api
+    - name: Build docs website and API reference
+      run: make build-docs VERSION=${RELEASE_TAG_VERSION}
     - name: Deploy all docs
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
-        keep_files: true
+        publish_dir: ./site
+        # keep_files: true
         destination_dir: ${RELEASE_TAG_VERSION}
+# TODO: Use mike to update latest alias once deployed

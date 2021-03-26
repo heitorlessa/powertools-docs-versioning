@@ -1,6 +1,8 @@
 .PHONY: target dev format lint test coverage-html pr  build build-docs build-docs-api build-docs-website
 .PHONY: docs-local docs-api-local security-baseline complexity-baseline release-prod release-test release
 
+VERSION ?= "develop"
+
 target:
 	@$(MAKE) pr
 
@@ -29,19 +31,15 @@ build: pr
 	poetry build
 
 build-docs:
-	@$(MAKE) build-docs-website
-	@$(MAKE) build-docs-api
-
-build-docs-api: dev
-	mkdir -p dist/api
-	poetry run pdoc --html --output-dir dist/api/ ./aws_lambda_powertools --force
-	mv -f dist/api/aws_lambda_powertools/* dist/api/
-	rm -rf dist/api/aws_lambda_powertools
-
-build-docs-website: dev
-	mkdir -p dist
-	poetry run mkdocs build
-	cp -R site/* dist/
+	@echo "Rebuilding docs"
+	rm -rf site api
+	@echo "Building website docs"
+	poetry run mike deploy ${VERSION}
+	@echo "Building API docs"
+	poetry run pdoc --html --output-dir api/ ./aws_lambda_powertools --force
+	@echo "Merging docs"
+	mkdir site/api
+	mv -f api/aws_lambda_powertools/* site/api
 
 docs-local:
 	poetry run mkdocs serve
@@ -57,9 +55,9 @@ security-baseline:
 	poetry run bandit --baseline bandit.baseline -r aws_lambda_powertools
 
 complexity-baseline:
-	$(info Maintenability index)
+	@echo "Maintenability index"
 	poetry run radon mi aws_lambda_powertools
-	$(info Cyclomatic complexity index)
+	@echo "Cyclomatic complexity index"
 	poetry run xenon --max-absolute C --max-modules A --max-average A aws_lambda_powertools
 
 #
