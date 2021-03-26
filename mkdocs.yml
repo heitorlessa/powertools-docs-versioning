@@ -4,7 +4,7 @@ site_author: Amazon Web Services
 nav:
   - Homepage: index.md
   - Changelog: changelog.md
-  - API reference: https://awslabs.github.io/aws-lambda-powertools-python/api/" target="_blank
+  - API reference: api/" target="_blank
   - Core utilities:
       - core/tracer.md
       - core/logger.md
