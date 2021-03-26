@@ -21,6 +21,10 @@ jobs:
       run: make dev
     # - name: Run all tests, linting and baselines
     #   run: make pr
+    - name: Setup doc deploy
+      run: |
+        git config --global user.name Docs deploy
+        git config --global user.email name@domain.com
     - name: Build docs website and API reference
       run: make build-docs VERSION=${RELEASE_TAG_VERSION} ALIAS="latest"
     - name: Deploy all docs
