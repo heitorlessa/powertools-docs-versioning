@@ -24,10 +24,10 @@ jobs:
           git config --global user.email docs@dummy.bot.com
       - name: Build docs website and API reference
         run: make release-docs VERSION="develop"
-      - name: Deploy all docs
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./api
-          # keep_files: true
-          destination_dir: develop
+      # - name: Deploy all docs
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./api
+      #     # keep_files: true
+      #     destination_dir: develop
