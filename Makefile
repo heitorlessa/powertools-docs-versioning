@@ -40,7 +40,7 @@ release-docs:
 	@echo "Rebuilding docs"
 	rm -rf site api
 	@echo "Updating website docs"
-	poetry run mike deploy --ignore --push --update-aliases ${VERSION} ${ALIAS}
+	poetry run mike deploy --rebase --push --update-aliases ${VERSION} ${ALIAS}
 	@echo "Building API docs"
 	$(MAKE) build-docs-api
 
