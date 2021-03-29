@@ -4,6 +4,11 @@
 VERSION ?= "develop"
 ALIAS ?= ""
 
+# Mike in release-docs target cannot separate build from deploy
+# in this case we publish latest docs first to update version.json in remote
+# build API docs separately then make a separate commit to gh-pages via Actions
+# see .github/workflows/publish.yml
+
 target:
 	@$(MAKE) pr
 
@@ -31,16 +36,23 @@ pr: lint test security-baseline complexity-baseline
 build: pr
 	poetry build
 
-build-docs:
+release-docs:
 	@echo "Rebuilding docs"
 	rm -rf site api
-	@echo "Building website docs"
-	poetry run mike deploy --update-aliases ${VERSION} ${ALIAS}
+	@echo "Updating website docs"
+	poetry run mike deploy --ignore --push --update-aliases ${VERSION} ${ALIAS}
 	@echo "Building API docs"
-	poetry run pdoc --html --output-dir api/ ./aws_lambda_powertools --force
-	@echo "Merging docs"
-	mkdir site/api
-	mv -f api/aws_lambda_powertools/* site/api
+	$(MAKE) build-docs-api
+
+build-docs-api:
+	poetry run pdoc --html --output-dir ./api/ ./aws_lambda_powertools --force
+	mv -f ./api/aws_lambda_powertools/* ./api/
+	rm -rf ./api/aws_lambda_powertools
+
+# build-docs-website:
+# 	mkdir -p dist
+# 	poetry run mkdocs build
+# 	cp -R site/* dist/
 
 docs-local:
 	poetry run mkdocs serve
