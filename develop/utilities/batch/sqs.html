@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>aws_lambda_powertools.utilities.batch API documentation</title>
-<meta name="description" content="Batch processing utility" />
+<title>aws_lambda_powertools.utilities.batch.sqs API documentation</title>
+<meta name="description" content="Batch SQS utilities" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -19,10 +19,10 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>aws_lambda_powertools.utilities.batch</code></h1>
+<h1 class="title">Module <code>aws_lambda_powertools.utilities.batch.sqs</code></h1>
 </header>
 <section id="section-intro">
-<p>Batch processing utility</p>
+<p>Batch SQS utilities</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -30,80 +30,150 @@
 <pre><code class="python"># -*- coding: utf-8 -*-
 
 &#34;&#34;&#34;
-Batch processing utility
+Batch SQS utilities
 &#34;&#34;&#34;
+import logging
+import sys
+from typing import Callable, Dict, List, Optional, Tuple
 
-from .base import BasePartialProcessor, batch_processor
-from .sqs import PartialSQSProcessor, sqs_batch_processor
+import boto3
+from botocore.config import Config
 
-__all__ = (&#34;BasePartialProcessor&#34;, &#34;PartialSQSProcessor&#34;, &#34;batch_processor&#34;, &#34;sqs_batch_processor&#34;)</code></pre>
-</details>
-</section>
-<section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
-<dl>
-<dt><code class="name"><a title="aws_lambda_powertools.utilities.batch.base" href="base.html">aws_lambda_powertools.utilities.batch.base</a></code></dt>
-<dd>
-<div class="desc"><p>Batch processing utilities</p></div>
-</dd>
-<dt><code class="name"><a title="aws_lambda_powertools.utilities.batch.exceptions" href="exceptions.html">aws_lambda_powertools.utilities.batch.exceptions</a></code></dt>
-<dd>
-<div class="desc"><p>Batch processing exceptions</p></div>
-</dd>
-<dt><code class="name"><a title="aws_lambda_powertools.utilities.batch.sqs" href="sqs.html">aws_lambda_powertools.utilities.batch.sqs</a></code></dt>
-<dd>
-<div class="desc"><p>Batch SQS utilities</p></div>
-</dd>
-</dl>
-</section>
-<section>
-</section>
-<section>
-<h2 class="section-title" id="header-functions">Functions</h2>
-<dl>
-<dt id="aws_lambda_powertools.utilities.batch.batch_processor"><code class="name flex">
-<span>def <span class="ident">batch_processor</span></span>(<span>handler: Callable, event: Dict, context: Dict, record_handler: Callable, processor: <a title="aws_lambda_powertools.utilities.batch.base.BasePartialProcessor" href="base.html#aws_lambda_powertools.utilities.batch.base.BasePartialProcessor">BasePartialProcessor</a> = None)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Middleware to handle batch event processing</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>handler</code></strong> :&ensp;<code>Callable</code></dt>
-<dd>Lambda's handler</dd>
-<dt><strong><code>event</code></strong> :&ensp;<code>Dict</code></dt>
-<dd>Lambda's Event</dd>
-<dt><strong><code>context</code></strong> :&ensp;<code>Dict</code></dt>
-<dd>Lambda's Context</dd>
-<dt><strong><code>record_handler</code></strong> :&ensp;<code>Callable</code></dt>
-<dd>Callable to process each record from the batch</dd>
-<dt><strong><code>processor</code></strong> :&ensp;<code><a title="aws_lambda_powertools.utilities.batch.PartialSQSProcessor" href="#aws_lambda_powertools.utilities.batch.PartialSQSProcessor">PartialSQSProcessor</a></code></dt>
-<dd>Batch Processor to handle partial failure cases</dd>
-</dl>
-<h2 id="examples">Examples</h2>
-<p><strong>Processes Lambda's event with PartialSQSProcessor</strong></p>
-<pre><code>&gt;&gt;&gt; from aws_lambda_powertools.utilities.batch import batch_processor, PartialSQSProcessor
-&gt;&gt;&gt;
-&gt;&gt;&gt; def record_handler(record):
-&gt;&gt;&gt;     return record["body"]
-&gt;&gt;&gt;
-&gt;&gt;&gt; @batch_processor(record_handler=record_handler, processor=PartialSQSProcessor())
-&gt;&gt;&gt; def handler(event, context):
-&gt;&gt;&gt;     return {"StatusCode": 200}
-</code></pre>
-<h2 id="limitations">Limitations</h2>
-<ul>
-<li>Async batch processors</li>
-</ul></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@lambda_handler_decorator
-def batch_processor(
-    handler: Callable, event: Dict, context: Dict, record_handler: Callable, processor: BasePartialProcessor = None
+from ...middleware_factory import lambda_handler_decorator
+from .base import BasePartialProcessor
+from .exceptions import SQSBatchProcessingError
+
+logger = logging.getLogger(__name__)
+
+
+class PartialSQSProcessor(BasePartialProcessor):
+    &#34;&#34;&#34;
+    Amazon SQS batch processor to delete successes from the Queue.
+
+    The whole batch will be processed, even if failures occur. After all records are processed,
+    SQSBatchProcessingError will be raised if there were any failures, causing messages to
+    be returned to the SQS queue. This behaviour can be disabled by passing suppress_exception.
+
+    Parameters
+    ----------
+    config: Config
+        botocore config object
+    suppress_exception: bool, optional
+        Supress exception raised if any messages fail processing, by default False
+
+
+    Example
+    -------
+    **Process batch triggered by SQS**
+
+        &gt;&gt;&gt; from aws_lambda_powertools.utilities.batch import PartialSQSProcessor
+        &gt;&gt;&gt;
+        &gt;&gt;&gt; def record_handler(record):
+        &gt;&gt;&gt;     return record[&#34;body&#34;]
+        &gt;&gt;&gt;
+        &gt;&gt;&gt; def handler(event, context):
+        &gt;&gt;&gt;     records = event[&#34;Records&#34;]
+        &gt;&gt;&gt;     processor = PartialSQSProcessor()
+        &gt;&gt;&gt;
+        &gt;&gt;&gt;     with processor(records=records, handler=record_handler):
+        &gt;&gt;&gt;         result = processor.process()
+        &gt;&gt;&gt;
+        &gt;&gt;&gt;     # Case a partial failure occurred, all successful executions
+        &gt;&gt;&gt;     # have been deleted from the queue after context&#39;s exit.
+        &gt;&gt;&gt;
+        &gt;&gt;&gt;     return result
+
+    &#34;&#34;&#34;
+
+    def __init__(self, config: Optional[Config] = None, suppress_exception: bool = False):
+        &#34;&#34;&#34;
+        Initializes sqs client.
+        &#34;&#34;&#34;
+        config = config or Config()
+        self.client = boto3.client(&#34;sqs&#34;, config=config)
+        self.suppress_exception = suppress_exception
+
+        super().__init__()
+
+    def _get_queue_url(self) -&gt; Optional[str]:
+        &#34;&#34;&#34;
+        Format QueueUrl from first records entry
+        &#34;&#34;&#34;
+        if not getattr(self, &#34;records&#34;, None):
+            return
+
+        *_, account_id, queue_name = self.records[0][&#34;eventSourceARN&#34;].split(&#34;:&#34;)
+        return f&#34;{self.client._endpoint.host}/{account_id}/{queue_name}&#34;
+
+    def _get_entries_to_clean(self) -&gt; List:
+        &#34;&#34;&#34;
+        Format messages to use in batch deletion
+        &#34;&#34;&#34;
+        return [{&#34;Id&#34;: msg[&#34;messageId&#34;], &#34;ReceiptHandle&#34;: msg[&#34;receiptHandle&#34;]} for msg in self.success_messages]
+
+    def _process_record(self, record) -&gt; Tuple:
+        &#34;&#34;&#34;
+        Process a record with instance&#39;s handler
+
+        Parameters
+        ----------
+        record: Any
+            An object to be processed.
+        &#34;&#34;&#34;
+        try:
+            result = self.handler(record=record)
+            return self.success_handler(record=record, result=result)
+        except Exception:
+            return self.failure_handler(record=record, exception=sys.exc_info())
+
+    def _prepare(self):
+        &#34;&#34;&#34;
+        Remove results from previous execution.
+        &#34;&#34;&#34;
+        self.success_messages.clear()
+        self.fail_messages.clear()
+
+    def _clean(self):
+        &#34;&#34;&#34;
+        Delete messages from Queue in case of partial failure.
+        &#34;&#34;&#34;
+        # If all messages were successful, fall back to the default SQS -
+        # Lambda behaviour which deletes messages if Lambda responds successfully
+        if not self.fail_messages:
+            logger.debug(f&#34;All {len(self.success_messages)} records successfully processed&#34;)
+            return
+
+        queue_url = self._get_queue_url()
+        entries_to_remove = self._get_entries_to_clean()
+
+        delete_message_response = None
+        if entries_to_remove:
+            delete_message_response = self.client.delete_message_batch(QueueUrl=queue_url, Entries=entries_to_remove)
+
+        if self.suppress_exception:
+            logger.debug(f&#34;{len(self.fail_messages)} records failed processing, but exceptions are suppressed&#34;)
+        else:
+            logger.debug(f&#34;{len(self.fail_messages)} records failed processing, raising exception&#34;)
+            raise SQSBatchProcessingError(
+                msg=f&#34;Not all records processed successfully. {len(self.exceptions)} individual errors logged &#34;
+                f&#34;separately below.&#34;,
+                child_exceptions=self.exceptions,
+            )
+
+        return delete_message_response
+
+
+@lambda_handler_decorator
+def sqs_batch_processor(
+    handler: Callable,
+    event: Dict,
+    context: Dict,
+    record_handler: Callable,
+    config: Optional[Config] = None,
+    suppress_exception: bool = False,
 ):
     &#34;&#34;&#34;
-    Middleware to handle batch event processing
+    Middleware to handle SQS batch event processing
 
     Parameters
     ----------
@@ -115,19 +185,21 @@ def batch_processor(
         Lambda&#39;s Context
     record_handler: Callable
         Callable to process each record from the batch
-    processor: PartialSQSProcessor
-        Batch Processor to handle partial failure cases
+    config: Config
+            botocore config object
+    suppress_exception: bool, optional
+        Supress exception raised if any messages fail processing, by default False
 
     Examples
     --------
     **Processes Lambda&#39;s event with PartialSQSProcessor**
 
-        &gt;&gt;&gt; from aws_lambda_powertools.utilities.batch import batch_processor, PartialSQSProcessor
+        &gt;&gt;&gt; from aws_lambda_powertools.utilities.batch import sqs_batch_processor
         &gt;&gt;&gt;
         &gt;&gt;&gt; def record_handler(record):
-        &gt;&gt;&gt;     return record[&#34;body&#34;]
+        &gt;&gt;&gt;      return record[&#34;body&#34;]
         &gt;&gt;&gt;
-        &gt;&gt;&gt; @batch_processor(record_handler=record_handler, processor=PartialSQSProcessor())
+        &gt;&gt;&gt; @sqs_batch_processor(record_handler=record_handler)
         &gt;&gt;&gt; def handler(event, context):
         &gt;&gt;&gt;     return {&#34;StatusCode&#34;: 200}
 
@@ -136,6 +208,9 @@ def batch_processor(
     * Async batch processors
 
     &#34;&#34;&#34;
+    config = config or Config()
+    processor = PartialSQSProcessor(config=config, suppress_exception=suppress_exception)
+
     records = event[&#34;Records&#34;]
 
     with processor(records, record_handler):
@@ -143,8 +218,15 @@ def batch_processor(
 
     return handler(event, context)</code></pre>
 </details>
-</dd>
-<dt id="aws_lambda_powertools.utilities.batch.sqs_batch_processor"><code class="name flex">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="aws_lambda_powertools.utilities.batch.sqs.sqs_batch_processor"><code class="name flex">
 <span>def <span class="ident">sqs_batch_processor</span></span>(<span>handler: Callable, event: Dict, context: Dict, record_handler: Callable, config: Union[botocore.config.Config, NoneType] = None, suppress_exception: bool = False)</span>
 </code></dt>
 <dd>
@@ -244,191 +326,7 @@ def sqs_batch_processor(
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="aws_lambda_powertools.utilities.batch.BasePartialProcessor"><code class="flex name class">
-<span>class <span class="ident">BasePartialProcessor</span></span>
-</code></dt>
-<dd>
-<div class="desc"><p>Abstract class for batch processors.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class BasePartialProcessor(ABC):
-    &#34;&#34;&#34;
-    Abstract class for batch processors.
-    &#34;&#34;&#34;
-
-    def __init__(self):
-        self.success_messages: List = []
-        self.fail_messages: List = []
-        self.exceptions: List = []
-
-    @abstractmethod
-    def _prepare(self):
-        &#34;&#34;&#34;
-        Prepare context manager.
-        &#34;&#34;&#34;
-        raise NotImplementedError()
-
-    @abstractmethod
-    def _clean(self):
-        &#34;&#34;&#34;
-        Clear context manager.
-        &#34;&#34;&#34;
-        raise NotImplementedError()
-
-    @abstractmethod
-    def _process_record(self, record: Any):
-        &#34;&#34;&#34;
-        Process record with handler.
-        &#34;&#34;&#34;
-        raise NotImplementedError()
-
-    def process(self) -&gt; List[Tuple]:
-        &#34;&#34;&#34;
-        Call instance&#39;s handler for each record.
-        &#34;&#34;&#34;
-        return [self._process_record(record) for record in self.records]
-
-    def __enter__(self):
-        self._prepare()
-        return self
-
-    def __exit__(self, exception_type, exception_value, traceback):
-        self._clean()
-
-    def __call__(self, records: List[Any], handler: Callable):
-        &#34;&#34;&#34;
-        Set instance attributes before execution
-
-        Parameters
-        ----------
-        records: List[Any]
-            List with objects to be processed.
-        handler: Callable
-            Callable to process &#34;records&#34; entries.
-        &#34;&#34;&#34;
-        self.records = records
-        self.handler = handler
-        return self
-
-    def success_handler(self, record: Any, result: Any):
-        &#34;&#34;&#34;
-        Success callback
-
-        Returns
-        -------
-        tuple
-            &#34;success&#34;, result, original record
-        &#34;&#34;&#34;
-        entry = (&#34;success&#34;, result, record)
-        self.success_messages.append(record)
-        return entry
-
-    def failure_handler(self, record: Any, exception: Tuple):
-        &#34;&#34;&#34;
-        Failure callback
-
-        Returns
-        -------
-        tuple
-            &#34;fail&#34;, exceptions args, original record
-        &#34;&#34;&#34;
-        exception_string = f&#34;{exception[0]}:{exception[1]}&#34;
-        entry = (&#34;fail&#34;, exception_string, record)
-        logger.debug(f&#34;Record processing exception: {exception_string}&#34;)
-        self.exceptions.append(exception)
-        self.fail_messages.append(record)
-        return entry</code></pre>
-</details>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li>abc.ABC</li>
-</ul>
-<h3>Subclasses</h3>
-<ul class="hlist">
-<li><a title="aws_lambda_powertools.utilities.batch.sqs.PartialSQSProcessor" href="sqs.html#aws_lambda_powertools.utilities.batch.sqs.PartialSQSProcessor">PartialSQSProcessor</a></li>
-</ul>
-<h3>Methods</h3>
-<dl>
-<dt id="aws_lambda_powertools.utilities.batch.BasePartialProcessor.failure_handler"><code class="name flex">
-<span>def <span class="ident">failure_handler</span></span>(<span>self, record: Any, exception: Tuple)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Failure callback</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>"fail", exceptions args, original record</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def failure_handler(self, record: Any, exception: Tuple):
-    &#34;&#34;&#34;
-    Failure callback
-
-    Returns
-    -------
-    tuple
-        &#34;fail&#34;, exceptions args, original record
-    &#34;&#34;&#34;
-    exception_string = f&#34;{exception[0]}:{exception[1]}&#34;
-    entry = (&#34;fail&#34;, exception_string, record)
-    logger.debug(f&#34;Record processing exception: {exception_string}&#34;)
-    self.exceptions.append(exception)
-    self.fail_messages.append(record)
-    return entry</code></pre>
-</details>
-</dd>
-<dt id="aws_lambda_powertools.utilities.batch.BasePartialProcessor.process"><code class="name flex">
-<span>def <span class="ident">process</span></span>(<span>self) ‑> List[Tuple]</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Call instance's handler for each record.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def process(self) -&gt; List[Tuple]:
-    &#34;&#34;&#34;
-    Call instance&#39;s handler for each record.
-    &#34;&#34;&#34;
-    return [self._process_record(record) for record in self.records]</code></pre>
-</details>
-</dd>
-<dt id="aws_lambda_powertools.utilities.batch.BasePartialProcessor.success_handler"><code class="name flex">
-<span>def <span class="ident">success_handler</span></span>(<span>self, record: Any, result: Any)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Success callback</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>"success", result, original record</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def success_handler(self, record: Any, result: Any):
-    &#34;&#34;&#34;
-    Success callback
-
-    Returns
-    -------
-    tuple
-        &#34;success&#34;, result, original record
-    &#34;&#34;&#34;
-    entry = (&#34;success&#34;, result, record)
-    self.success_messages.append(record)
-    return entry</code></pre>
-</details>
-</dd>
-</dl>
-</dd>
-<dt id="aws_lambda_powertools.utilities.batch.PartialSQSProcessor"><code class="flex name class">
+<dt id="aws_lambda_powertools.utilities.batch.sqs.PartialSQSProcessor"><code class="flex name class">
 <span>class <span class="ident">PartialSQSProcessor</span></span>
 <span>(</span><span>config: Union[botocore.config.Config, NoneType] = None, suppress_exception: bool = False)</span>
 </code></dt>
@@ -611,34 +509,18 @@ be returned to the SQS queue. This behaviour can be disabled by passing suppress
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="aws_lambda_powertools.utilities" href="../index.html">aws_lambda_powertools.utilities</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
-<ul>
-<li><code><a title="aws_lambda_powertools.utilities.batch.base" href="base.html">aws_lambda_powertools.utilities.batch.base</a></code></li>
-<li><code><a title="aws_lambda_powertools.utilities.batch.exceptions" href="exceptions.html">aws_lambda_powertools.utilities.batch.exceptions</a></code></li>
-<li><code><a title="aws_lambda_powertools.utilities.batch.sqs" href="sqs.html">aws_lambda_powertools.utilities.batch.sqs</a></code></li>
+<li><code><a title="aws_lambda_powertools.utilities.batch" href="index.html">aws_lambda_powertools.utilities.batch</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="aws_lambda_powertools.utilities.batch.batch_processor" href="#aws_lambda_powertools.utilities.batch.batch_processor">batch_processor</a></code></li>
-<li><code><a title="aws_lambda_powertools.utilities.batch.sqs_batch_processor" href="#aws_lambda_powertools.utilities.batch.sqs_batch_processor">sqs_batch_processor</a></code></li>
+<li><code><a title="aws_lambda_powertools.utilities.batch.sqs.sqs_batch_processor" href="#aws_lambda_powertools.utilities.batch.sqs.sqs_batch_processor">sqs_batch_processor</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="aws_lambda_powertools.utilities.batch.BasePartialProcessor" href="#aws_lambda_powertools.utilities.batch.BasePartialProcessor">BasePartialProcessor</a></code></h4>
-<ul class="">
-<li><code><a title="aws_lambda_powertools.utilities.batch.BasePartialProcessor.failure_handler" href="#aws_lambda_powertools.utilities.batch.BasePartialProcessor.failure_handler">failure_handler</a></code></li>
-<li><code><a title="aws_lambda_powertools.utilities.batch.BasePartialProcessor.process" href="#aws_lambda_powertools.utilities.batch.BasePartialProcessor.process">process</a></code></li>
-<li><code><a title="aws_lambda_powertools.utilities.batch.BasePartialProcessor.success_handler" href="#aws_lambda_powertools.utilities.batch.BasePartialProcessor.success_handler">success_handler</a></code></li>
-</ul>
-</li>
-<li>
-<h4><code><a title="aws_lambda_powertools.utilities.batch.PartialSQSProcessor" href="#aws_lambda_powertools.utilities.batch.PartialSQSProcessor">PartialSQSProcessor</a></code></h4>
+<h4><code><a title="aws_lambda_powertools.utilities.batch.sqs.PartialSQSProcessor" href="#aws_lambda_powertools.utilities.batch.sqs.PartialSQSProcessor">PartialSQSProcessor</a></code></h4>
 </li>
 </ul>
 </li>
