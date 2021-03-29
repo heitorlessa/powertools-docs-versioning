@@ -23,7 +23,8 @@ jobs:
           git config --global user.name Docs deploy
           git config --global user.email docs@dummy.bot.com
       - name: Build docs website and API reference
-        run: make release-docs VERSION="develop"
+        run: poetry run mike deploy --push develop
+        # run: make release-docs VERSION="develop"
       # - name: Deploy all docs
       #   uses: peaceiris/actions-gh-pages@v3
       #   with:
