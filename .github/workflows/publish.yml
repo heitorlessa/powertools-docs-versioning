@@ -32,5 +32,5 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./api
-        keep_files: true
+        # keep_files: true
         destination_dir: ${{ env.RELEASE_TAG_VERSION }}
