@@ -3,7 +3,7 @@ title: Homepage
 description: AWS Lambda Powertools Python
 ---
 
-!!! danger "New develop version wipes existing versions"
+!!! danger "New develop version using stage alias"
 
 A suite of utilities for AWS Lambda functions to ease adopting best practices such as tracing, structured logging, custom metrics, and more.
 
