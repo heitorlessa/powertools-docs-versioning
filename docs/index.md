@@ -3,6 +3,8 @@ title: Homepage
 description: AWS Lambda Powertools Python
 ---
 
+!!! danger "This should be 1.21.0 version"
+
 A suite of utilities for AWS Lambda functions to ease adopting best practices such as tracing, structured logging, custom metrics, and more.
 
 !!! tip "Looking for a quick read through how the core features are used?"
