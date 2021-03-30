@@ -31,11 +31,10 @@ jobs:
       run: make release-docs VERSION=${RELEASE_TAG_VERSION} ALIAS="latest"
     - name: Update docs redirects
       run: poetry run mike set-default --push latest
-
-    # - name: Deploy all docs
-    #   uses: peaceiris/actions-gh-pages@v3
-    #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     publish_dir: ./api
-    #     # keep_files: true
-    #     destination_dir: ${{ env.RELEASE_TAG_VERSION }}
+    - name: Deploy all docs
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./api
+        keep_files: true
+        destination_dir: ${{ env.RELEASE_TAG_VERSION }}
