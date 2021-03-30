@@ -1,1168 +1,560 @@
-
 <!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-        <meta name="description" content="Utility">
-      
-      
-      
-        <meta name="author" content="Amazon Web Services">
-      
-      
-      <link rel="icon" href="../../media/aws-logo-light.svg">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
-    
-    
-      
-        <title>Validation - Lambda Powertools Python</title>
-      
-    
-    
-      <link rel="stylesheet" href="../../assets/stylesheets/main.2c0c5eaf.min.css">
-      
-        
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
-        
-          
-          
-          <meta name="theme-color" content="#7e56c2">
-        
-      
-    
-    
-    
-      
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
-      
-    
-    
-    
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
-    
-    
-      
-    
-    
-  
-  
-    
-  
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="awscloud" />
-  <meta name="twitter:title" content="Lambda Powertools Python - Validation" />
-  <meta name="twitter:description" content="AWS Lambda Powertools for Python" />
-  <meta name="twitter:image" content="../../assets/images/powertools_docs_thumbnail.png" />
-  <meta name="twitter:image:alt" content="Lambda Powertools Python">
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Lambda Powertools Python - Validation" />
-  <meta property="og:site_name" content="Lambda Powertools Python">
-  <meta property="og:description" content="AWS Lambda Powertools for Python" />
-  <meta property="og:url" content="None" />
-  <meta property="og:image" content="../../assets/images/powertools_docs_thumbnail.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-
-  </head>
-  
-  
-    
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="deep-purple" data-md-color-accent="">
-      
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#validating-events" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Lambda Powertools Python" class="md-header__button md-logo" aria-label="Lambda Powertools Python" data-md-component="logo">
-      
-  <img src="../../media/aws-logo-light.svg" alt="logo">
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            Lambda Powertools Python
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              Validation
-            
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="md-header__options">
-      
-    </div>
-    
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-      </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-    
-    
-      <div class="md-header__source">
-        
-<a href="https://github.com/awslabs/aws-lambda-powertools-python/" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
-  </div>
-  <div class="md-source__repository">
-    GitHub
-  </div>
-</a>
-      </div>
-    
-  </nav>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>aws_lambda_powertools.utilities.validation API documentation</title>
+<meta name="description" content="Simple validator to enforce incoming/outgoing event conforms with JSON Schema" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>aws_lambda_powertools.utilities.validation</code></h1>
 </header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
+<section id="section-intro">
+<p>Simple validator to enforce incoming/outgoing event conforms with JSON Schema</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Simple validator to enforce incoming/outgoing event conforms with JSON Schema
+&#34;&#34;&#34;
 
+from .exceptions import InvalidEnvelopeExpressionError, InvalidSchemaFormatError, SchemaValidationError
+from .validator import validate, validator
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Lambda Powertools Python" class="md-nav__button md-logo" aria-label="Lambda Powertools Python" data-md-component="logo">
-      
-  <img src="../../media/aws-logo-light.svg" alt="logo">
+__all__ = [
+    &#34;validate&#34;,
+    &#34;validator&#34;,
+    &#34;InvalidSchemaFormatError&#34;,
+    &#34;SchemaValidationError&#34;,
+    &#34;InvalidEnvelopeExpressionError&#34;,
+]</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="aws_lambda_powertools.utilities.validation.base" href="base.html">aws_lambda_powertools.utilities.validation.base</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="aws_lambda_powertools.utilities.validation.envelopes" href="envelopes.html">aws_lambda_powertools.utilities.validation.envelopes</a></code></dt>
+<dd>
+<div class="desc"><p>Built-in envelopes</p></div>
+</dd>
+<dt><code class="name"><a title="aws_lambda_powertools.utilities.validation.exceptions" href="exceptions.html">aws_lambda_powertools.utilities.validation.exceptions</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="aws_lambda_powertools.utilities.validation.validate"><code class="name flex">
+<span>def <span class="ident">validate</span></span>(<span>event: Dict, schema: Dict = None, formats: Union[Dict, NoneType] = None, envelope: str = None, jmespath_options: Dict = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Standalone function to validate event data using a JSON Schema</p>
+<p>Typically used when you need more control over the validation process.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>event</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>Lambda event to be validated</dd>
+<dt><strong><code>schema</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>JSON Schema to validate incoming event</dd>
+<dt><strong><code>envelope</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>JMESPath expression to filter data against</dd>
+<dt><strong><code>jmespath_options</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>Alternative JMESPath options to be included when filtering expr</dd>
+<dt><strong><code>formats</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>Custom formats containing a key (e.g. int64) and a value expressed as regex or callback returning bool</dd>
+</dl>
+<h2 id="example">Example</h2>
+<p><strong>Validate event</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validate
 
-    </a>
-    Lambda Powertools Python
-  </label>
-  
-    <div class="md-nav__source">
-      
-<a href="https://github.com/awslabs/aws-lambda-powertools-python/" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
-  </div>
-  <div class="md-source__repository">
-    GitHub
-  </div>
-</a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
+def handler(event, context):
+    validate(event=event, schema=json_schema_dict)
+    return event
+</code></pre>
+<p><strong>Unwrap event before validating against actual payload - using built-in envelopes</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validate, envelopes
 
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
-        Homepage
-      </a>
-    </li>
-  
+def handler(event, context):
+    validate(event=event, schema=json_schema_dict, envelope=envelopes.API_GATEWAY_REST)
+    return event
+</code></pre>
+<p><strong>Unwrap event before validating against actual payload - using custom JMESPath expression</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validate
 
-    
-      
-      
-      
+def handler(event, context):
+    validate(event=event, schema=json_schema_dict, envelope="payload[*].my_data")
+    return event
+</code></pre>
+<p><strong>Unwrap and deserialize JSON string event before validating against actual payload - using built-in functions</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validate
 
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../changelog/" class="md-nav__link">
-        Changelog
-      </a>
-    </li>
-  
+def handler(event, context):
+    validate(event=event, schema=json_schema_dict, envelope="Records[*].powertools_json(body)")
+    return event
+</code></pre>
+<p><strong>Unwrap, decode base64 and deserialize JSON string event before validating against actual payload - using built-in functions</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validate
 
-    
-      
-      
-      
+def handler(event, context):
+    validate(event=event, schema=json_schema_dict, envelope="Records[*].kinesis.powertools_json(powertools_base64(data))")
+    return event
+</code></pre>
+<p><strong>Unwrap, decompress ZIP archive and deserialize JSON string event before validating against actual payload - using built-in functions</strong> # noqa: E501</p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validate
 
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../api/" target="_blank" class="md-nav__link">
-        API reference
-      </a>
-    </li>
-  
+def handler(event, context):
+    validate(event=event, schema=json_schema_dict, envelope="awslogs.powertools_base64_gzip(data) | powertools_json(@).logEvents[*]")
+    return event
+</code></pre>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code><a title="aws_lambda_powertools.utilities.validation.SchemaValidationError" href="#aws_lambda_powertools.utilities.validation.SchemaValidationError">SchemaValidationError</a></code></dt>
+<dd>When schema validation fails against data set</dd>
+<dt><code><a title="aws_lambda_powertools.utilities.validation.InvalidSchemaFormatError" href="#aws_lambda_powertools.utilities.validation.InvalidSchemaFormatError">InvalidSchemaFormatError</a></code></dt>
+<dd>When JSON schema provided is invalid</dd>
+<dt><code><a title="aws_lambda_powertools.utilities.validation.InvalidEnvelopeExpressionError" href="#aws_lambda_powertools.utilities.validation.InvalidEnvelopeExpressionError">InvalidEnvelopeExpressionError</a></code></dt>
+<dd>When JMESPath expression to unwrap event is invalid</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate(
+    event: Dict,
+    schema: Dict = None,
+    formats: Optional[Dict] = None,
+    envelope: str = None,
+    jmespath_options: Dict = None,
+):
+    &#34;&#34;&#34;Standalone function to validate event data using a JSON Schema
 
-    
-      
-      
-      
+     Typically used when you need more control over the validation process.
 
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" data-md-state="indeterminate" type="checkbox" id="__nav_4" checked>
-      
-      <label class="md-nav__link" for="__nav_4">
-        Core utilities
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Core utilities" data-md-level="1">
-        <label class="md-nav__title" for="__nav_4">
-          <span class="md-nav__icon md-icon"></span>
-          Core utilities
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../core/tracer/" class="md-nav__link">
-        Tracer
-      </a>
-    </li>
-  
+    Parameters
+    ----------
+    event : Dict
+        Lambda event to be validated
+    schema : Dict
+        JSON Schema to validate incoming event
+    envelope : Dict
+        JMESPath expression to filter data against
+    jmespath_options : Dict
+        Alternative JMESPath options to be included when filtering expr
+    formats: Dict
+        Custom formats containing a key (e.g. int64) and a value expressed as regex or callback returning bool
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../core/logger/" class="md-nav__link">
-        Logger
-      </a>
-    </li>
-  
+    Example
+    -------
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../core/metrics/" class="md-nav__link">
-        Metrics
-      </a>
-    </li>
-  
+    **Validate event**
 
-          
-        </ul>
-      </nav>
-    </li>
-  
+        from aws_lambda_powertools.utilities.validation import validate
 
-    
-      
-      
-      
+        def handler(event, context):
+            validate(event=event, schema=json_schema_dict)
+            return event
 
-  
-  
-    
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
-      
-      <label class="md-nav__link" for="__nav_5">
-        Utilities
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Utilities" data-md-level="1">
-        <label class="md-nav__title" for="__nav_5">
-          <span class="md-nav__icon md-icon"></span>
-          Utilities
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../middleware_factory/" class="md-nav__link">
-        Middleware factory
-      </a>
-    </li>
-  
+    **Unwrap event before validating against actual payload - using built-in envelopes**
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../parameters/" class="md-nav__link">
-        Parameters
-      </a>
-    </li>
-  
+        from aws_lambda_powertools.utilities.validation import validate, envelopes
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../batch/" class="md-nav__link">
-        SQS Batch Processing
-      </a>
-    </li>
-  
+        def handler(event, context):
+            validate(event=event, schema=json_schema_dict, envelope=envelopes.API_GATEWAY_REST)
+            return event
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../typing/" class="md-nav__link">
-        Typing
-      </a>
-    </li>
-  
+    **Unwrap event before validating against actual payload - using custom JMESPath expression**
 
-          
-            
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Validation
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        Validation
-      </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#validating-events" class="md-nav__link">
-    Validating events
-  </a>
-  
-    <nav class="md-nav" aria-label="Validating events">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#validator-decorator" class="md-nav__link">
-    Validator decorator
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#validate-function" class="md-nav__link">
-    Validate function
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#validating-custom-formats" class="md-nav__link">
-    Validating custom formats
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unwrapping-events-prior-to-validation" class="md-nav__link">
-    Unwrapping events prior to validation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#built-in-envelopes" class="md-nav__link">
-    Built-in envelopes
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#built-in-jmespath-functions" class="md-nav__link">
-    Built-in JMESPath functions
-  </a>
-  
-    <nav class="md-nav" aria-label="Built-in JMESPath functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#powertools_json-function" class="md-nav__link">
-    powertools_json function
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#powertools_base64-function" class="md-nav__link">
-    powertools_base64 function
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#powertools_base64_gzip-function" class="md-nav__link">
-    powertools_base64_gzip function
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bring-your-own-jmespath-function" class="md-nav__link">
-    Bring your own JMESPath function
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
+        from aws_lambda_powertools.utilities.validation import validate
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../data_classes/" class="md-nav__link">
-        Event Source Data Classes
-      </a>
-    </li>
-  
+        def handler(event, context):
+            validate(event=event, schema=json_schema_dict, envelope=&#34;payload[*].my_data&#34;)
+            return event
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../parser/" class="md-nav__link">
-        Parser
-      </a>
-    </li>
-  
+    **Unwrap and deserialize JSON string event before validating against actual payload - using built-in functions**
 
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../idempotency/" class="md-nav__link">
-        Idempotency
-      </a>
-    </li>
-  
+        from aws_lambda_powertools.utilities.validation import validate
 
-          
-        </ul>
-      </nav>
-    </li>
-  
+        def handler(event, context):
+            validate(event=event, schema=json_schema_dict, envelope=&#34;Records[*].powertools_json(body)&#34;)
+            return event
 
-    
-  </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#validating-events" class="md-nav__link">
-    Validating events
-  </a>
-  
-    <nav class="md-nav" aria-label="Validating events">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#validator-decorator" class="md-nav__link">
-    Validator decorator
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#validate-function" class="md-nav__link">
-    Validate function
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#validating-custom-formats" class="md-nav__link">
-    Validating custom formats
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unwrapping-events-prior-to-validation" class="md-nav__link">
-    Unwrapping events prior to validation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#built-in-envelopes" class="md-nav__link">
-    Built-in envelopes
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#built-in-jmespath-functions" class="md-nav__link">
-    Built-in JMESPath functions
-  </a>
-  
-    <nav class="md-nav" aria-label="Built-in JMESPath functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#powertools_json-function" class="md-nav__link">
-    powertools_json function
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#powertools_base64-function" class="md-nav__link">
-    powertools_base64 function
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#powertools_base64_gzip-function" class="md-nav__link">
-    powertools_base64_gzip function
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bring-your-own-jmespath-function" class="md-nav__link">
-    Bring your own JMESPath function
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
-                
-                  <a href="https://github.com/awslabs/aws-lambda-powertools-python/edit/develop/docs/utilities/validation.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
-                
-                  <h1>Validation</h1>
-                
-                <p>This utility provides JSON Schema validation for events and responses, including JMESPath support to unwrap events before validation.</p>
-<p><strong>Key features</strong></p>
-<ul>
-<li>Validate incoming event and response</li>
-<li>JMESPath support to unwrap events before validation applies</li>
-<li>Built-in envelopes to unwrap popular event sources payloads</li>
+    **Unwrap, decode base64 and deserialize JSON string event before validating against actual payload - using built-in functions**
+
+        from aws_lambda_powertools.utilities.validation import validate
+
+        def handler(event, context):
+            validate(event=event, schema=json_schema_dict, envelope=&#34;Records[*].kinesis.powertools_json(powertools_base64(data))&#34;)
+            return event
+
+    **Unwrap, decompress ZIP archive and deserialize JSON string event before validating against actual payload - using built-in functions** # noqa: E501
+
+        from aws_lambda_powertools.utilities.validation import validate
+
+        def handler(event, context):
+            validate(event=event, schema=json_schema_dict, envelope=&#34;awslogs.powertools_base64_gzip(data) | powertools_json(@).logEvents[*]&#34;)
+            return event
+
+    Raises
+    ------
+    SchemaValidationError
+        When schema validation fails against data set
+    InvalidSchemaFormatError
+        When JSON schema provided is invalid
+    InvalidEnvelopeExpressionError
+        When JMESPath expression to unwrap event is invalid
+    &#34;&#34;&#34;
+    if envelope:
+        event = unwrap_event_from_envelope(data=event, envelope=envelope, jmespath_options=jmespath_options)
+
+    validate_data_against_schema(data=event, schema=schema, formats=formats)</code></pre>
+</details>
+</dd>
+<dt id="aws_lambda_powertools.utilities.validation.validator"><code class="name flex">
+<span>def <span class="ident">validator</span></span>(<span>handler: Callable, event: Union[Dict, str], context: Any, inbound_schema: Dict = None, inbound_formats: Union[Dict, NoneType] = None, outbound_schema: Dict = None, outbound_formats: Union[Dict, NoneType] = None, envelope: str = None, jmespath_options: Dict = None) ‑> Any</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lambda handler decorator to validate incoming/outbound data using a JSON Schema</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>handler</code></strong> :&ensp;<code>Callable</code></dt>
+<dd>Method to annotate on</dd>
+<dt><strong><code>event</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>Lambda event to be validated</dd>
+<dt><strong><code>context</code></strong> :&ensp;<code>Any</code></dt>
+<dd>Lambda context object</dd>
+<dt><strong><code>inbound_schema</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>JSON Schema to validate incoming event</dd>
+<dt><strong><code>outbound_schema</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>JSON Schema to validate outbound event</dd>
+<dt><strong><code>envelope</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>JMESPath expression to filter data against</dd>
+<dt><strong><code>jmespath_options</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>Alternative JMESPath options to be included when filtering expr</dd>
+<dt><strong><code>inbound_formats</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>Custom formats containing a key (e.g. int64) and a value expressed as regex or callback returning bool</dd>
+<dt><strong><code>outbound_formats</code></strong> :&ensp;<code>Dict</code></dt>
+<dd>Custom formats containing a key (e.g. int64) and a value expressed as regex or callback returning bool</dd>
+</dl>
+<h2 id="example">Example</h2>
+<p><strong>Validate incoming event</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validator
+
+@validator(inbound_schema=json_schema_dict)
+def handler(event, context):
+    return event
+</code></pre>
+<p><strong>Validate incoming and outgoing event</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validator
+
+@validator(inbound_schema=json_schema_dict, outbound_schema=response_json_schema_dict)
+def handler(event, context):
+    return event
+</code></pre>
+<p><strong>Unwrap event before validating against actual payload - using built-in envelopes</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validator, envelopes
+
+@validator(inbound_schema=json_schema_dict, envelope=envelopes.API_GATEWAY_REST)
+def handler(event, context):
+    return event
+</code></pre>
+<p><strong>Unwrap event before validating against actual payload - using custom JMESPath expression</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validator
+
+@validator(inbound_schema=json_schema_dict, envelope="payload[*].my_data")
+def handler(event, context):
+    return event
+</code></pre>
+<p><strong>Unwrap and deserialize JSON string event before validating against actual payload - using built-in functions</strong></p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validator
+
+@validator(inbound_schema=json_schema_dict, envelope="Records[*].powertools_json(body)")
+def handler(event, context):
+    return event
+</code></pre>
+<p><strong>Unwrap, decode base64 and deserialize JSON string event before validating against actual payload - using built-in functions</strong> # noqa: E501</p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validator
+
+@validator(inbound_schema=json_schema_dict, envelope="Records[*].kinesis.powertools_json(powertools_base64(data))")
+def handler(event, context):
+    return event
+</code></pre>
+<p><strong>Unwrap, decompress ZIP archive and deserialize JSON string event before validating against actual payload - using built-in functions</strong> # noqa: E501</p>
+<pre><code>from aws_lambda_powertools.utilities.validation import validator
+
+@validator(inbound_schema=json_schema_dict, envelope="awslogs.powertools_base64_gzip(data) | powertools_json(@).logEvents[*]")
+def handler(event, context):
+    return event
+</code></pre>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Any</code></dt>
+<dd>Lambda handler response</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code><a title="aws_lambda_powertools.utilities.validation.SchemaValidationError" href="#aws_lambda_powertools.utilities.validation.SchemaValidationError">SchemaValidationError</a></code></dt>
+<dd>When schema validation fails against data set</dd>
+<dt><code><a title="aws_lambda_powertools.utilities.validation.InvalidSchemaFormatError" href="#aws_lambda_powertools.utilities.validation.InvalidSchemaFormatError">InvalidSchemaFormatError</a></code></dt>
+<dd>When JSON schema provided is invalid</dd>
+<dt><code><a title="aws_lambda_powertools.utilities.validation.InvalidEnvelopeExpressionError" href="#aws_lambda_powertools.utilities.validation.InvalidEnvelopeExpressionError">InvalidEnvelopeExpressionError</a></code></dt>
+<dd>When JMESPath expression to unwrap event is invalid</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@lambda_handler_decorator
+def validator(
+    handler: Callable,
+    event: Union[Dict, str],
+    context: Any,
+    inbound_schema: Dict = None,
+    inbound_formats: Optional[Dict] = None,
+    outbound_schema: Dict = None,
+    outbound_formats: Optional[Dict] = None,
+    envelope: str = None,
+    jmespath_options: Dict = None,
+) -&gt; Any:
+    &#34;&#34;&#34;Lambda handler decorator to validate incoming/outbound data using a JSON Schema
+
+    Parameters
+    ----------
+    handler : Callable
+        Method to annotate on
+    event : Dict
+        Lambda event to be validated
+    context : Any
+        Lambda context object
+    inbound_schema : Dict
+        JSON Schema to validate incoming event
+    outbound_schema : Dict
+        JSON Schema to validate outbound event
+    envelope : Dict
+        JMESPath expression to filter data against
+    jmespath_options : Dict
+        Alternative JMESPath options to be included when filtering expr
+    inbound_formats: Dict
+        Custom formats containing a key (e.g. int64) and a value expressed as regex or callback returning bool
+    outbound_formats: Dict
+        Custom formats containing a key (e.g. int64) and a value expressed as regex or callback returning bool
+
+    Example
+    -------
+
+    **Validate incoming event**
+
+        from aws_lambda_powertools.utilities.validation import validator
+
+        @validator(inbound_schema=json_schema_dict)
+        def handler(event, context):
+            return event
+
+    **Validate incoming and outgoing event**
+
+        from aws_lambda_powertools.utilities.validation import validator
+
+        @validator(inbound_schema=json_schema_dict, outbound_schema=response_json_schema_dict)
+        def handler(event, context):
+            return event
+
+    **Unwrap event before validating against actual payload - using built-in envelopes**
+
+        from aws_lambda_powertools.utilities.validation import validator, envelopes
+
+        @validator(inbound_schema=json_schema_dict, envelope=envelopes.API_GATEWAY_REST)
+        def handler(event, context):
+            return event
+
+    **Unwrap event before validating against actual payload - using custom JMESPath expression**
+
+        from aws_lambda_powertools.utilities.validation import validator
+
+        @validator(inbound_schema=json_schema_dict, envelope=&#34;payload[*].my_data&#34;)
+        def handler(event, context):
+            return event
+
+    **Unwrap and deserialize JSON string event before validating against actual payload - using built-in functions**
+
+        from aws_lambda_powertools.utilities.validation import validator
+
+        @validator(inbound_schema=json_schema_dict, envelope=&#34;Records[*].powertools_json(body)&#34;)
+        def handler(event, context):
+            return event
+
+    **Unwrap, decode base64 and deserialize JSON string event before validating against actual payload - using built-in functions** # noqa: E501
+
+        from aws_lambda_powertools.utilities.validation import validator
+
+        @validator(inbound_schema=json_schema_dict, envelope=&#34;Records[*].kinesis.powertools_json(powertools_base64(data))&#34;)
+        def handler(event, context):
+            return event
+
+    **Unwrap, decompress ZIP archive and deserialize JSON string event before validating against actual payload - using built-in functions** # noqa: E501
+
+        from aws_lambda_powertools.utilities.validation import validator
+
+        @validator(inbound_schema=json_schema_dict, envelope=&#34;awslogs.powertools_base64_gzip(data) | powertools_json(@).logEvents[*]&#34;)
+        def handler(event, context):
+            return event
+
+    Returns
+    -------
+    Any
+        Lambda handler response
+
+    Raises
+    ------
+    SchemaValidationError
+        When schema validation fails against data set
+    InvalidSchemaFormatError
+        When JSON schema provided is invalid
+    InvalidEnvelopeExpressionError
+        When JMESPath expression to unwrap event is invalid
+    &#34;&#34;&#34;
+    if envelope:
+        event = unwrap_event_from_envelope(data=event, envelope=envelope, jmespath_options=jmespath_options)
+
+    if inbound_schema:
+        logger.debug(&#34;Validating inbound event&#34;)
+        validate_data_against_schema(data=event, schema=inbound_schema, formats=inbound_formats)
+
+    response = handler(event, context)
+
+    if outbound_schema:
+        logger.debug(&#34;Validating outbound event&#34;)
+        validate_data_against_schema(data=response, schema=outbound_schema, formats=outbound_formats)
+
+    return response</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="aws_lambda_powertools.utilities.validation.InvalidEnvelopeExpressionError"><code class="flex name class">
+<span>class <span class="ident">InvalidEnvelopeExpressionError</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>When JMESPath fails to parse expression</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InvalidEnvelopeExpressionError(Exception):
+    &#34;&#34;&#34;When JMESPath fails to parse expression&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
 </ul>
-<h2 id="validating-events">Validating events<a class="headerlink" href="#validating-events" title="Permanent link">&para;</a></h2>
-<p>You can validate inbound and outbound events using <code>validator</code> decorator.</p>
-<p>You can also use the standalone <code>validate</code> function, if you want more control over the validation process such as handling a validation error.</p>
-<p>We support any JSONSchema draft supported by <a href="https://horejsek.github.io/python-fastjsonschema/">fastjsonschema</a> library.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Both <code>validator</code> decorator and <code>validate</code> standalone function expects your JSON Schema to be a <strong>dictionary</strong>, not a filename.</p>
+</dd>
+<dt id="aws_lambda_powertools.utilities.validation.InvalidSchemaFormatError"><code class="flex name class">
+<span>class <span class="ident">InvalidSchemaFormatError</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>When JSON Schema is in invalid format</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InvalidSchemaFormatError(Exception):
+    &#34;&#34;&#34;When JSON Schema is in invalid format&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+<dt id="aws_lambda_powertools.utilities.validation.SchemaValidationError"><code class="flex name class">
+<span>class <span class="ident">SchemaValidationError</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>When serialization fail schema validation</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SchemaValidationError(Exception):
+    &#34;&#34;&#34;When serialization fail schema validation&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
 </div>
-<h3 id="validator-decorator">Validator decorator<a class="headerlink" href="#validator-decorator" title="Permanent link">&para;</a></h3>
-<p><strong>Validator</strong> decorator is typically used to validate either inbound or functions' response.</p>
-<p>It will fail fast with <code>SchemaValidationError</code> exception if event or response doesn't conform with given JSON Schema.</p>
-<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">validator_decorator.py</label><div class="tabbed-content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation</span> <span class="kn">import</span> <span class="n">validator</span>
-
-<span class="n">json_schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">..</span><span class="p">}</span>
-<span class="n">response_json_schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">..</span><span class="p">}</span>
-
-<span class="nd">@validator</span><span class="p">(</span><span class="n">inbound_schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">,</span> <span class="n">outbound_schema</span><span class="o">=</span><span class="n">response_json_schema_dict</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">event</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It's not a requirement to validate both inbound and outbound schemas - You can either use one, or both.</p>
-</div>
-<h3 id="validate-function">Validate function<a class="headerlink" href="#validate-function" title="Permanent link">&para;</a></h3>
-<p><strong>Validate</strong> standalone function is typically used within the Lambda handler, or any other methods that perform data validation.</p>
-<p>You can also gracefully handle schema validation errors by catching <code>SchemaValidationError</code> exception.</p>
-<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">validator_decorator.py</label><div class="tabbed-content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation</span> <span class="kn">import</span> <span class="n">validate</span>
-<span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation.exceptions</span> <span class="kn">import</span> <span class="n">SchemaValidationError</span>
-
-<span class="n">json_schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">..</span><span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">validate</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">SchemaValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="c1"># do something before re-raising</span>
-        <span class="k">raise</span>
-
-    <span class="k">return</span> <span class="n">event</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-</div>
-<h3 id="validating-custom-formats">Validating custom formats<a class="headerlink" href="#validating-custom-formats" title="Permanent link">&para;</a></h3>
-<div class="admonition note">
-<p class="admonition-title">New in 1.10.0</p>
-<p>JSON Schema DRAFT 7 <a href="https://json-schema.org/understanding-json-schema/reference/string.html#format">has many new built-in formats</a> such as date, time, and specifically a regex format which might be a better replacement for a custom format, if you do have control over the schema.</p>
-</div>
-<p>If you have JSON Schemas with custom formats, for example having a <code>int64</code> for high precision integers, you can pass an optional validation to handle each type using <code>formats</code> parameter - Otherwise it'll fail validation:</p>
-<p><strong>Example of custom integer format</strong></p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;lastModifiedTime&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;int64&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-</td></tr></table>
-<p>For each format defined in a dictionary key, you must use a regex, or a function that returns a boolean to instruct the validator on how to proceed when encountering that type.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation</span> <span class="kn">import</span> <span class="n">validate</span>
-
-<span class="n">event</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># some event</span>
-<span class="n">schema_with_custom_format</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># some JSON schema that defines a custom format</span>
-
-<span class="n">custom_format</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;int64&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="c1"># simply ignore it,</span>
-    <span class="s2">&quot;positive&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">True</span>
-<span class="p">}</span>
-
-<span class="n">validate</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema_with_custom_format</span><span class="p">,</span> <span class="n">formats</span><span class="o">=</span><span class="n">custom_format</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
-<h2 id="unwrapping-events-prior-to-validation">Unwrapping events prior to validation<a class="headerlink" href="#unwrapping-events-prior-to-validation" title="Permanent link">&para;</a></h2>
-<p>You might want to validate only a portion of your event - This is where the <code>envelope</code> parameter is for.</p>
-<p>Envelopes are <a href="https://jmespath.org/tutorial.html">JMESPath expressions</a> to extract a portion of JSON you want before applying JSON Schema validation.</p>
-<p>Here is a sample custom EventBridge event, where we only validate what's inside the <code>detail</code> key:</p>
-<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">sample_wrapped_event.json</label><div class="tabbed-content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;cdc73f9d-aea9-11e3-9d5a-835b769c0d9c&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;detail-type&quot;</span><span class="p">:</span> <span class="s2">&quot;Scheduled Event&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;aws.events&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;account&quot;</span><span class="p">:</span> <span class="s2">&quot;123456789012&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;1970-01-01T00:00:00Z&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;us-east-1&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;resources&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;arn:aws:events:us-east-1:123456789012:rule/ExampleRule&quot;</span><span class="p">],</span>
-<span class="hll">  <span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;hello hello&quot;</span><span class="p">,</span> <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;blah blah&quot;</span><span class="p">}</span>
-</span><span class="p">}</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-</div>
-<p>Here is how you'd use the <code>envelope</code> parameter to extract the payload inside the <code>detail</code> key before validating:</p>
-<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">unwrapping_events.py</label><div class="tabbed-content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation</span> <span class="kn">import</span> <span class="n">validator</span><span class="p">,</span> <span class="n">validate</span>
-
-<span class="n">json_schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">..</span><span class="p">}</span>
-
-<span class="hll"><span class="nd">@validator</span><span class="p">(</span><span class="n">inbound_schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="s2">&quot;detail&quot;</span><span class="p">)</span>
-</span><span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-<span class="hll">    <span class="n">validate</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="s2">&quot;detail&quot;</span><span class="p">)</span>
-</span>    <span class="k">return</span> <span class="n">event</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-</div>
-<p>This is quite powerful because you can use JMESPath Query language to extract records from <a href="https://jmespath.org/tutorial.html#list-and-slice-projections">arrays, slice and dice</a>, to <a href="https://jmespath.org/tutorial.html#pipe-expressions">pipe expressions</a> and <a href="https://jmespath.org/tutorial.html#functions">function expressions</a>, where you'd extract what you need before validating the actual payload.</p>
-<h2 id="built-in-envelopes">Built-in envelopes<a class="headerlink" href="#built-in-envelopes" title="Permanent link">&para;</a></h2>
-<p>This utility comes with built-in envelopes to easily extract the payload from popular event sources.</p>
-<div class="tabbed-set" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">unwrapping_popular_event_sources.py</label><div class="tabbed-content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation</span> <span class="kn">import</span> <span class="n">envelopes</span><span class="p">,</span> <span class="n">validate</span><span class="p">,</span> <span class="n">validator</span>
-
-<span class="n">json_schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">..</span><span class="p">}</span>
-
-<span class="hll"><span class="nd">@validator</span><span class="p">(</span><span class="n">inbound_schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="n">envelopes</span><span class="o">.</span><span class="n">EVENTBRIDGE</span><span class="p">)</span>
-</span><span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-<span class="hll">    <span class="n">validate</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="n">envelopes</span><span class="o">.</span><span class="n">EVENTBRIDGE</span><span class="p">)</span>
-</span>    <span class="k">return</span> <span class="n">event</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-</div>
-<p>Here is a handy table with built-in envelopes along with their JMESPath expressions in case you want to build your own.</p>
-<table>
-<thead>
-<tr>
-<th>Envelope name</th>
-<th>JMESPath expression</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>API_GATEWAY_REST</strong></td>
-<td>"powertools_json(body)"</td>
-</tr>
-<tr>
-<td><strong>API_GATEWAY_HTTP</strong></td>
-<td>"powertools_json(body)"</td>
-</tr>
-<tr>
-<td><strong>SQS</strong></td>
-<td>"Records[*].powertools_json(body)"</td>
-</tr>
-<tr>
-<td><strong>SNS</strong></td>
-<td>"Records[0].Sns.Message</td>
-</tr>
-<tr>
-<td><strong>EVENTBRIDGE</strong></td>
-<td>"detail"</td>
-</tr>
-<tr>
-<td><strong>CLOUDWATCH_EVENTS_SCHEDULED</strong></td>
-<td>"detail"</td>
-</tr>
-<tr>
-<td><strong>KINESIS_DATA_STREAM</strong></td>
-<td>"Records[*].kinesis.powertools_json(powertools_base64(data))"</td>
-</tr>
-<tr>
-<td><strong>CLOUDWATCH_LOGS</strong></td>
-<td>"awslogs.powertools_base64_gzip(data)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="built-in-jmespath-functions">Built-in JMESPath functions<a class="headerlink" href="#built-in-jmespath-functions" title="Permanent link">&para;</a></h2>
-<p>You might have events or responses that contain non-encoded JSON, where you need to decode before validating them.</p>
-<p>You can use our built-in JMESPath functions within your expressions to do exactly that to decode JSON Strings, base64, and uncompress gzip data.</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>We use these for built-in envelopes to easily to decode and unwrap events from sources like Kinesis, CloudWatch Logs, etc.</p>
-</div>
-<h3 id="powertools_json-function">powertools_json function<a class="headerlink" href="#powertools_json-function" title="Permanent link">&para;</a></h3>
-<p>Use <code>powertools_json</code> function to decode any JSON String.</p>
-<p>This sample will decode the value within the <code>data</code> key into a valid JSON before we can validate it.</p>
-<div class="tabbed-set" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">powertools_json_jmespath_function.py</label><div class="tabbed-content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation</span> <span class="kn">import</span> <span class="n">validate</span>
-
-<span class="n">json_schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">..</span><span class="p">}</span>
-<span class="n">sample_event</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="s1">&#39;{&quot;payload&quot;: {&quot;message&quot;: &quot;hello hello&quot;, &quot;username&quot;: &quot;blah blah&quot;}}&#39;</span>
-<span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-<span class="hll">    <span class="n">validate</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="s2">&quot;powertools_json(data)&quot;</span><span class="p">)</span>
-</span>    <span class="k">return</span> <span class="n">event</span>
-
-<span class="n">handler</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">sample_event</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{})</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-</div>
-<h3 id="powertools_base64-function">powertools_base64 function<a class="headerlink" href="#powertools_base64-function" title="Permanent link">&para;</a></h3>
-<p>Use <code>powertools_base64</code> function to decode any base64 data.</p>
-<p>This sample will decode the base64 value within the <code>data</code> key, and decode the JSON string into a valid JSON before we can validate it.</p>
-<div class="tabbed-set" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">powertools_json_jmespath_function.py</label><div class="tabbed-content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation</span> <span class="kn">import</span> <span class="n">validate</span>
-
-<span class="n">json_schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">..</span><span class="p">}</span>
-<span class="n">sample_event</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;eyJtZXNzYWdlIjogImhlbGxvIGhlbGxvIiwgInVzZXJuYW1lIjogImJsYWggYmxhaCJ9=&quot;</span>
-<span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-<span class="hll">    <span class="n">validate</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="s2">&quot;powertools_json(powertools_base64(data))&quot;</span><span class="p">)</span>
-</span>    <span class="k">return</span> <span class="n">event</span>
-
-<span class="n">handler</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">sample_event</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{})</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-</div>
-<h3 id="powertools_base64_gzip-function">powertools_base64_gzip function<a class="headerlink" href="#powertools_base64_gzip-function" title="Permanent link">&para;</a></h3>
-<p>Use <code>powertools_base64_gzip</code> function to decompress and decode base64 data.</p>
-<p>This sample will decompress and decode base64 data, then use JMESPath pipeline expression to pass the result for decoding its JSON string.</p>
-<div class="tabbed-set" data-tabs="8:1"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">powertools_json_jmespath_function.py</label><div class="tabbed-content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation</span> <span class="kn">import</span> <span class="n">validate</span>
-
-<span class="n">json_schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">..</span><span class="p">}</span>
-<span class="n">sample_event</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;H4sIACZAXl8C/52PzUrEMBhFX2UILpX8tPbHXWHqIOiq3Q1F0ubrWEiakqTWofTdTYYB0YWL2d5zvnuTFellBIOedoiyKH5M0iwnlKH7HZL6dDB6ngLDfLFYctUKjie9gHFaS/sAX1xNEq525QxwFXRGGMEkx4Th491rUZdV3YiIZ6Ljfd+lfSyAtZloacQgAkqSJCGhxM6t7cwwuUGPz4N0YKyvO6I9WDeMPMSo8Z4Ca/kJ6vMEYW5f1MX7W1lVxaG8vqX8hNFdjlc0iCBBSF4ERT/3Pl7RbMGMXF2KZMh/C+gDpNS7RRsp0OaRGzx0/t8e0jgmcczyLCWEePhni/23JWalzjdu0a3ZvgEaNLXeugEAAA==&quot;</span>
-<span class="p">}</span>
-
-<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-<span class="hll">    <span class="n">validate</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="s2">&quot;powertools_base64_gzip(data) | powertools_json(@)&quot;</span><span class="p">)</span>
-</span>    <span class="k">return</span> <span class="n">event</span>
-
-<span class="n">handler</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">sample_event</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{})</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-</div>
-<h2 id="bring-your-own-jmespath-function">Bring your own JMESPath function<a class="headerlink" href="#bring-your-own-jmespath-function" title="Permanent link">&para;</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This should only be used for advanced use cases where you have special formats not covered by the built-in functions.</p>
-<p>This will <strong>replace all provided built-in functions such as <code>powertools_json</code>, so you will no longer be able to use them</strong>.</p>
-</div>
-<p>For special binary formats that you want to decode before applying JSON Schema validation, you can bring your own <a href="https://github.com/jmespath/jmespath.py#custom-functions">JMESPath function</a> and any additional option via <code>jmespath_options</code> param.</p>
-<div class="tabbed-set" data-tabs="9:1"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">custom_jmespath_function.py</label><div class="tabbed-content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aws_lambda_powertools.utilities.validation</span> <span class="kn">import</span> <span class="n">validate</span>
-<span class="kn">from</span> <span class="nn">jmespath</span> <span class="kn">import</span> <span class="n">functions</span>
-
-<span class="n">json_schema_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">..</span><span class="p">}</span>
-
-<span class="k">class</span> <span class="nc">CustomFunctions</span><span class="p">(</span><span class="n">functions</span><span class="o">.</span><span class="n">Functions</span><span class="p">):</span>
-
-    <span class="nd">@functions</span><span class="o">.</span><span class="n">signature</span><span class="p">({</span><span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;string&#39;</span><span class="p">]})</span>
-    <span class="k">def</span> <span class="nf">_func_special_decoder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">my_custom_decoder_logic</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-
-<span class="n">custom_jmespath_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;custom_functions&quot;</span><span class="p">:</span> <span class="n">CustomFunctions</span><span class="p">()}</span>
-
-<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-<span class="hll">    <span class="n">validate</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">json_schema_dict</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">jmespath_options</span><span class="o">=**</span><span class="n">custom_jmespath_options</span><span class="p">)</span>
-</span>    <span class="k">return</span> <span class="n">event</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-</div>
-                
-                  
-                
-              
-              
-                
-
-
-              
-            </article>
-          </div>
-        </div>
-      </main>
-      
-        
-<footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        <a href="../typing/" class="md-footer__link md-footer__link--prev" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Typing
-            </div>
-          </div>
-        </a>
-      
-      
-        <a href="../data_classes/" class="md-footer__link md-footer__link--next" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Event Source Data Classes
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-          <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Amazon Web Services
-          </div>
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-        
-      </div>
-      
-    </div>
-  </div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="aws_lambda_powertools.utilities" href="../index.html">aws_lambda_powertools.utilities</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="aws_lambda_powertools.utilities.validation.base" href="base.html">aws_lambda_powertools.utilities.validation.base</a></code></li>
+<li><code><a title="aws_lambda_powertools.utilities.validation.envelopes" href="envelopes.html">aws_lambda_powertools.utilities.validation.envelopes</a></code></li>
+<li><code><a title="aws_lambda_powertools.utilities.validation.exceptions" href="exceptions.html">aws_lambda_powertools.utilities.validation.exceptions</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="aws_lambda_powertools.utilities.validation.validate" href="#aws_lambda_powertools.utilities.validation.validate">validate</a></code></li>
+<li><code><a title="aws_lambda_powertools.utilities.validation.validator" href="#aws_lambda_powertools.utilities.validation.validator">validator</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="aws_lambda_powertools.utilities.validation.InvalidEnvelopeExpressionError" href="#aws_lambda_powertools.utilities.validation.InvalidEnvelopeExpressionError">InvalidEnvelopeExpressionError</a></code></h4>
+</li>
+<li>
+<h4><code><a title="aws_lambda_powertools.utilities.validation.InvalidSchemaFormatError" href="#aws_lambda_powertools.utilities.validation.InvalidSchemaFormatError">InvalidSchemaFormatError</a></code></h4>
+</li>
+<li>
+<h4><code><a title="aws_lambda_powertools.utilities.validation.SchemaValidationError" href="#aws_lambda_powertools.utilities.validation.SchemaValidationError">SchemaValidationError</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fb4a9340.min.js", "version": {"provider": "mike"}}</script>
-    
-    
-      <script src="../../assets/javascripts/bundle.a1c7c35e.min.js"></script>
-      
-        <script src="../../javascript/aws-amplify.min.js"></script>
-      
-        <script src="../../javascript/extra.js"></script>
-      
-    
-  </body>
+</body>
 </html>
