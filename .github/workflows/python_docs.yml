@@ -30,4 +30,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./api
           keep_files: true
-          destination_dir: develop
+          destination_dir: develop/api
