@@ -31,6 +31,9 @@ jobs:
           publish_dir: ./api
           keep_files: true
           destination_dir: develop/api
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 15
       - name: Create redirect from old docs
         run: |
           git checkout gh-pages
