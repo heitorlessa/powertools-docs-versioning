@@ -295,6 +295,7 @@ test_report
 wheelhouse
 /.idea/*
 *.html
+!404.html
 
 # Docs files
 docs/.cache/
