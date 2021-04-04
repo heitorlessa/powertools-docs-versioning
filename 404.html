@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
         const websitePath = window.location.pathname;
-        const versionRegex = /(aws-lambda-powertools-\w+)\/(latest|([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?)/;
+        const versionRegex = /(powertools-docs-versioning)\/(latest|([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?)/;
         const websiteVersion = websitePath.match(versionRegex);
 
         if (websiteVersion === null) {
