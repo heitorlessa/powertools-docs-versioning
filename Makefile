@@ -49,10 +49,6 @@ build-docs-api:
 	mv -f ./api/aws_lambda_powertools/* ./api/
 	rm -rf ./api/aws_lambda_powertools
 
-# build-docs-website:
-# 	mkdir -p dist
-# 	poetry run mkdocs build
-# 	cp -R site/* dist/
 
 docs-local:
 	poetry run mkdocs serve
