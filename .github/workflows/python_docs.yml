@@ -6,7 +6,7 @@ on:
       - develop
 
 jobs:
-  api-docs:
+  docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,3 +31,9 @@ jobs:
           publish_dir: ./api
           keep_files: true
           destination_dir: develop/api
+      - name: Create redirect from old docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./404.html
+          keep_files: true
