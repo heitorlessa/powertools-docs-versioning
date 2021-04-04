@@ -34,6 +34,7 @@ jobs:
       - name: Create redirect from old docs
         run: |
           git checkout gh-pages
+          test -f 404.html && echo "Redirect already set" && exit 0
           git checkout develop -- 404.html
           git add 404.html
           git commit -m "chore: set docs redirect" --no-verify

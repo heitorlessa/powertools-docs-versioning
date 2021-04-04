@@ -38,14 +38,3 @@ jobs:
         publish_dir: ./api
         keep_files: true
         destination_dir: ${{ env.RELEASE_TAG_VERSION }}/api
-    - name: Create redirect from old docs
-      run: |
-        git checkout gh-pages
-        git checkout develop -- 404.html
-        git add 404.html
-        git commit -m "chore: set docs redirect" --no-verify
-        git push origin gh-pages -f
-    - name: Setup tmate session
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
-      timeout-minutes: 15
