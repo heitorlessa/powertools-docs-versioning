@@ -9,7 +9,7 @@
         const versionRegex = /(powertools-docs-versioning)\/(latest|([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?)/;
         const websiteVersion = websitePath.match(versionRegex);
 
-        if (websiteVersion === null) {
+        if (websiteVersion === -1) {
             let projectName = websiteVersion[1]
             // redirect old links to latest version alias
             window.location = websitePath.replace(projectName, `${projectName}/latest`)
